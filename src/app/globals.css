@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+@import "tailwindcss";
+@import "tw-animate-css";
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: #FFFFFF;
+  --color-foreground: #000000;
+
+  --color-card: #F8F8F8;
+  --color-card-foreground: #000000;
+
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #000000;
+
+  --color-primary: #000000;
+  --color-primary-foreground: #FFFFFF;
+
+  --color-secondary: #666666;
+  --color-secondary-foreground: #FFFFFF;
+
+  --color-muted: #999999;
+  --color-muted-foreground: #000000;
+
+  --color-accent: #0080FF;
+  --color-accent-foreground: #FFFFFF;
+
+  --color-destructive: #EF4444;
+  --color-destructive-foreground: #FFFFFF;
+
+  --color-border: #E5E5E5;
+  --color-input: #E5E5E5;
+  --color-ring: #000000;
+
+  --color-chart-1: #E67E22;
+  --color-chart-2: #2D8659;
+  --color-chart-3: #1E3A5F;
+  --color-chart-4: #F1C40F;
+  --color-chart-5: #E74C3C;
+
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  --font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --color-text-primary: #000000;
+  --color-text-secondary: #666666;
+  --color-text-muted: #999999;
+  --color-surface: #F8F8F8;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: #E5E5E5;
+  }
+}
+
+@layer utilities {
+  body {
+    font-family: var(--font-primary);
+  }
+}
+
+@layer base {
+  :root {
+    --background: var(--color-background);
+    --foreground: var(--color-foreground);
+    --card: var(--color-card);
+    --card-foreground: var(--color-card-foreground);
+    --popover: var(--color-popover);
+    --popover-foreground: var(--color-popover-foreground);
+    --primary: var(--color-primary);
+    --primary-foreground: var(--color-primary-foreground);
+    --secondary: var(--color-secondary);
+    --secondary-foreground: var(--color-secondary-foreground);
+    --muted: var(--color-muted);
+    --muted-foreground: var(--color-muted-foreground);
+    --accent: var(--color-accent);
+    --accent-foreground: var(--color-accent-foreground);
+    --destructive: var(--color-destructive);
+    --destructive-foreground: var(--color-destructive-foreground);
+    --border: var(--color-border);
+    --input: var(--color-input);
+    --ring: var(--color-ring);
+    --chart-1: var(--color-chart-1);
+    --chart-2: var(--color-chart-2);
+    --chart-3: var(--color-chart-3);
+    --chart-4: var(--color-chart-4);
+    --chart-5: var(--color-chart-5);
+    --radius: var(--radius-lg);
+
+    --text-primary: var(--color-text-primary);
+    --text-secondary: var(--color-text-secondary);
+    --text-muted: var(--color-text-muted);
+    --surface: var(--color-surface);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-primary);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: 96px;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text-primary);
+  }
+
+  h2 {
+    font-size: 72px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text-primary);
+  }
+
+  h3 {
+    font-size: 48px;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--text-primary);
+  }
+
+  h4 {
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-primary);
+  }
+
+  h5 {
+    font-size: 24px;
+    font-weight: 500;
+    line-height: 1.4;
+    color: var(--text-primary);
+  }
+
+  p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-primary);
+  }
+
+  .text-large {
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .text-small {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  a {
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.3s ease-in-out;
+  }
+
+  a:hover {
+    color: var(--accent);
+  }
+
+  .container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  section {
+    padding-top: 120px;
+    padding-bottom: 120px;
+  }
+
+  input, textarea {
+    border: 1px solid var(--border);
+    padding: 16px;
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-primary);
+    transition: color 0.3s ease-in-out;
+  }
+
+  button:hover {
+    color: var(--accent);
+  }
+}
+
+/* Hide Next.js error overlay portal */
+nextjs-portal {
+  display: none !important;
+}
