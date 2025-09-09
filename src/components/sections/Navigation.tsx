@@ -35,7 +35,7 @@ export default function Navigation() {
       const isCurrent = (pathname === '/' && item.href === '/') || (item.href !== '/' && pathname.startsWith(item.href));
       const isMuted = item.label.includes('soon');
       
-      const commonClasses = isMobile ? 'text-3xl font-normal' : 'text-sm';
+      const commonClasses = isMobile ? 'text-3xl font-normal' : 'text-sm font-book';
       const stateClasses = isMuted 
         ? 'text-text-muted cursor-default pointer-events-none' 
         : isCurrent && !isMobile

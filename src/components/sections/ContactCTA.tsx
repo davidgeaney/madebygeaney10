@@ -2,14 +2,14 @@ import React from 'react';
 
 const ContactCTA = () => {
   return (
-    <section className="bg-background text-text-primary py-20 md:py-32">
-      <div className="container">
+    <section className="bg-background text-text-primary pt-20 md:pt-32">
+      <div className="container px-0">
         <div className="border-t border-border" />
-        <div className="flex justify-between items-center py-10">
+        <div className="flex justify-between items-center py-20">
           <a
             href="mailto:hello@jillesdesign.com"
             aria-label="Get in touch by email"
-            className="text-6xl md:text-8xl lg:text-[96px] font-normal leading-[1.1] tracking-tighter text-text-primary hover:text-accent transition-colors duration-300 ease-in-out"
+            className="text-6xl md:text-8xl lg:text-[96px] font-medium leading-[1.1] tracking-tighter text-text-primary hover:text-accent transition-colors duration-300 ease-in-out"
           >
             Get in touch
           </a>
