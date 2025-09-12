@@ -2,29 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import Script from "next/script";
-import IntroAnimationWrapper from "../components/ui/IntroAnimationWrapper";
+import IntroAnimation from "../components/ui/IntroAnimation";
 import VisualEditsMessenger from "../visual-edits/VisualEditsMessenger";
-
-// Client component for client-side functionality
-function ClientLayout({ children }: { children: React.ReactNode }) {
-  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
-
-  return (
-    <>
-      <IntroAnimationWrapper onComplete={() => setIsAnimationComplete(true)} />
-      <div style={{ visibility: isAnimationComplete ? 'visible' : 'hidden' }}>
-        {children}
-      </div>
-      <VisualEditsMessenger />
-    </>
-  );
-}
 
 export default function ClientRootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [isAnimationComplete, setIsAnimationComplete] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -32,7 +18,7 @@ export default function ClientRootLayout({
   }, []);
 
   if (!isClient) {
-    return <>{children}</>;
+    return null; // Don't render anything on the server
   }
 
   return (
@@ -47,7 +33,20 @@ export default function ClientRootLayout({
         data-debug="true"
         data-custom-data='{"appName": "YourApp", "version": "1.0.0", "greeting": "hi"}'
       />
-      <ClientLayout>{children}</ClientLayout>
+      <IntroAnimation onComplete={() => setIsAnimationComplete(true)} />
+      <div style={{ 
+        opacity: isAnimationComplete ? 1 : 0,
+        transition: 'opacity 0.3s ease-in-out',
+        visibility: isAnimationComplete ? 'visible' : 'hidden',
+        position: isAnimationComplete ? 'relative' : 'fixed',
+        width: '100%',
+        height: isAnimationComplete ? 'auto' : '100vh',
+        overflowX: 'hidden',
+        overflowY: isAnimationComplete ? 'visible' : 'hidden'
+      }}>
+        {children}
+      </div>
+      <VisualEditsMessenger />
     </>
   );
 }

@@ -24,7 +24,7 @@ const socialLinks = [
 const Hero = () => {
   const pathname = usePathname();
   return (
-    <div className="pt-6 pb-10 px-4 bg-background text-foreground">
+    <div className="pt-6 pb-10 px-6 md:px-8 lg:px-12 bg-background text-foreground">
       <div className="w-full max-w-[1600px] mx-auto flex justify-between items-start gap-10 md:gap-20">
         {/* Logo */}
         <div className="flex-shrink-0">
@@ -77,9 +77,9 @@ const Hero = () => {
 
         {/* About Section */}
         <div className="max-w-lg">
-          <p className="text-base font-medium text-muted-foreground">About Jilles</p>
+          <p className="text-base font-medium text-muted-foreground">About Us</p>
           <p className="text-base font-normal text-text-muted max-w-sm">
-          An independent designer & developer building clean, high-end websites and digital products. Partnering with brands, startups, and studios who value premium design, solid execution, and long-term quality.
+          We build fully custom websites quickly and efficiently. Working with businesses that care about smart design, strong functionality, and results they can see.
           </p>
         </div>
 

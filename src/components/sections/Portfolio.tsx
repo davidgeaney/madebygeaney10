@@ -5,25 +5,25 @@ const portfolioProjects = [
   {
     title: "Davidson van de ven",
     description: "Website for a freelance photographer",
-    imageUrl: "/projects/classcovernew.webp",
+    imageUrl: "/projects/classcoverimage.webp",
     href: "#",
   },
   {
     title: "Strive",
     description: "Website design for a digital agency",
-    imageUrl: "/projects/creacynew.webp",
+    imageUrl: "/projects/creacyphotographyimage.webp",
     href: "#",
   },
   {
     title: "Nord studio",
     description: "Premium creative agency website",
-    imageUrl: "/projects/eliraurichnew.webp",
+    imageUrl: "/projects/eliraurichimage.webp",
     href: "#",
   },
   {
     title: "Verts",
     description: "Premium website for freelance photographer",
-    imageUrl: "/projects/smiledublinnew.webp",
+    imageUrl: "/projects/smiledublinimage.webp",
     href: "#",
   },
   {
@@ -55,15 +55,15 @@ const portfolioProjects = [
 type PortfolioProject = (typeof portfolioProjects)[0];
 
 const ProjectCard = ({ project }: { project: PortfolioProject }) => (
-  <Link href={project.href} className="group block w-full relative overflow-hidden">
-    <div className="relative w-full pb-[100%] rounded-2xl">
-      <div className="absolute inset-0 overflow-hidden rounded-xl">
+  <Link href={project.href} className="group block w-full relative" style={{ borderRadius: '0.5rem' }}>
+    <div className="relative w-full pb-[100%] overflow-hidden" style={{ borderRadius: '0.5rem' }}>
+      <div className="absolute inset-0" style={{ borderRadius: '0.5rem' }}>
         <Image
           src={project.imageUrl}
           alt={project.title || "Portfolio project image"}
           fill
           sizes="(max-width: 768px) 100vw, 50vw"
-          className="object-cover w-full h-full transition-transform duration-500 ease-in-out group-hover:scale-105"
+          className="object-cover w-full h-full transition-transform duration-300 ease-in-out delay-75 group-hover:scale-[1.02]"
         />
         <div className="absolute bottom-0 left-0 right-0 p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
           <p className="text-white text-sm font-medium">{project.description}</p>
@@ -81,14 +81,14 @@ const Portfolio = () => {
   }
 
   return (
-    <section className="bg-background relative z-10 pt-64">
-      <div className="w-full max-w-none px-4">
+    <section className="bg-background relative z-10 pt-32 md:pt-48">
+      <div className="w-full max-w-none px-2 sm:px-4">
         <div className="grid grid-cols-1 gap-0">
           {projectPairs.map((pair, index) => (
-            <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-2 w-full border-t border-gray-100 last:border-b">
+            <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-2 w-full">
               {pair.map((project, projectIndex) => (
                 <div key={`project-${index}-${projectIndex}`} className="w-full">
-                  <div className="max-w-[1800px] mx-auto py-1">
+                  <div className="max-w-[2000px] mx-auto py-1">
                     <ProjectCard project={project} />
                   </div>
                 </div>

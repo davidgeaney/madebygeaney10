@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import styles from './IntroAnimation.module.css';
 
 interface IntroAnimationProps {
@@ -8,46 +9,43 @@ interface IntroAnimationProps {
 }
 
 const IntroAnimation: React.FC<IntroAnimationProps> = ({ onComplete }) => {
-  const [isVisible, setIsVisible] = useState(true);
-  const [isMounted, setIsMounted] = useState(false);
+  const [show, setShow] = useState(true);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
+    // Mark as mounted on client
+    setMounted(true);
     
-    const animationDuration = 3000; // 3 seconds
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-      if (onComplete) {
-        onComplete();
-      }
-    }, animationDuration);
+    // Start fade out after 1.5 seconds
+    const fadeOutTimer = setTimeout(() => {
+      setShow(false);
+    }, 1500);
 
-    return () => clearTimeout(timer);
+    // Call onComplete after animation finishes (2 seconds total)
+    const completeTimer = setTimeout(() => {
+      onComplete?.();
+    }, 2000);
+
+    return () => {
+      clearTimeout(fadeOutTimer);
+      clearTimeout(completeTimer);
+    };
   }, [onComplete]);
 
-  if (!isMounted) {
-    return (
-      <div className={`${styles.overlay} ${styles.initial}`}>
-        <div className={styles.logoContainer}>
-          <img
-            src="/madebygeaneylogo.svg"
-            alt="Loading..."
-            className={styles.logo}
-          />
-        </div>
-      </div>
-    );
+  if (!mounted) {
+    return null;
   }
 
-  if (!isVisible) return null;
-
   return (
-    <div className={`${styles.overlay} ${styles.animate}`}>
+    <div className={`${styles.overlay} ${!show ? styles.hidden : ''}`}>
       <div className={styles.logoContainer}>
-        <img
+        <Image
           src="/madebygeaneylogo.svg"
-          alt="Made by Geaney Logo"
+          alt="Made by Geaney"
           className={styles.logo}
+          width={300}
+          height={60}
+          priority
         />
       </div>
     </div>

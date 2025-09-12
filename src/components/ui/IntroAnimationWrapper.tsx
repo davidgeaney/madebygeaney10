@@ -2,50 +2,28 @@
 
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
-import styles from './IntroAnimation.module.css';
 
 interface IntroAnimationWrapperProps {
   onComplete?: () => void;
+  show?: boolean;
 }
 
 const IntroAnimation = dynamic(
   () => import('./IntroAnimation'),
-  { 
-    ssr: false,
-    loading: () => (
-      <div className={styles.overlay}>
-        <div className={styles.logoContainer}>
-          <img
-            src="/madebygeaneylogo.svg"
-            alt="Loading..."
-            className={styles.logo}
-          />
-        </div>
-      </div>
-    )
-  }
+  { ssr: false }
 );
 
-export default function IntroAnimationWrapper({ onComplete }: IntroAnimationWrapperProps) {
-  const [isClient, setIsClient] = useState(false);
+export default function IntroAnimationWrapper({ onComplete, show = true }: IntroAnimationWrapperProps) {
+  const [isMounted, setIsMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(show);
 
   useEffect(() => {
-    setIsClient(true);
+    setIsMounted(true);
+    return () => setIsVisible(false);
   }, []);
 
-  // Don't render anything on the server
-  if (!isClient) {
-    return (
-      <div className={styles.overlay}>
-        <div className={styles.logoContainer}>
-          <img
-            src="/madebygeaneylogo.svg"
-            alt="Loading..."
-            className={styles.logo}
-          />
-        </div>
-      </div>
-    );
+  if (!isMounted) {
+    return null;
   }
 
   return <IntroAnimation onComplete={onComplete} />;
