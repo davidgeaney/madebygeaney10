@@ -87,7 +87,7 @@ const Portfolio = () => {
           {projectPairs.map((pair, index) => (
             <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-0 md:gap-2 w-full border-t border-gray-100 last:border-b">
               {pair.map((project, projectIndex) => (
-                <div className="w-full">
+                <div key={`project-${index}-${projectIndex}`} className="w-full">
                   <div className="max-w-[1800px] mx-auto py-1">
                     <ProjectCard project={project} />
                   </div>
