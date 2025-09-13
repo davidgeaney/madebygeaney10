@@ -62,7 +62,7 @@ export default function Navigation() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 bg-background/90 backdrop-blur-sm border-b border-border/50">
+      <header className="fixed top-4 left-0 right-0 z-40 bg-background/90 backdrop-blur-sm border border-border/50 rounded-full mx-4">
         <div className="container mx-auto px-10 h-[68px] flex items-center justify-between">
           <div className="flex items-center gap-10">
             <Logo />

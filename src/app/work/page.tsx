@@ -1,14 +1,12 @@
-import Hero from "@/components/sections/Hero";
-import Portfolio from "@/components/sections/Portfolio";
+import WorkHero from "@/components/sections/WorkHero";
 import ContactCTA from "@/components/sections/ContactCTA";
 
-export default function HomePage() {
+export default function WorkPage() {
   return (
     <div className="min-h-screen bg-background">
       <main className="m-0 p-0">
-        <Hero />
+        <WorkHero />
         <div className="relative">
-          <Portfolio />
           <div>
             <ContactCTA />
           </div>

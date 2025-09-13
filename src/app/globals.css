@@ -127,6 +127,10 @@
 }
 
 @layer base {
+  body {
+    font-family: 'PPNeue Montreal', sans-serif;
+  }
+  
   :root {
     --background: var(--color-background);
     --foreground: var(--color-foreground);

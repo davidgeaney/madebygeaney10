@@ -81,32 +81,63 @@ const TimezoneClock = () => {
   );
 };
 
+const AnimatedText = ({ text }: { text: string }) => {
+  return (
+    <span className="inline-block group">
+      <style jsx>{`
+        @keyframes floatUp {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-16px); }
+        }
+        .float-char {
+          display: inline-block;
+          transition: transform 0.2s ease-in-out;
+        }
+        .group:hover .float-char {
+          animation: floatUp 0.4s ease-in-out;
+        }
+      `}</style>
+      {text.split('').map((char, i) => (
+        <span 
+          key={i} 
+          className="float-char"
+          style={{ 
+            animationDelay: `${i * 50}ms`,
+            animationFillMode: 'both',
+          }}
+        >
+          {char === ' ' ? '\u00A0' : char}
+        </span>
+      ))}
+    </span>
+  );
+};
+
 const ContactCTA = () => {
   return (
     <section className="bg-background text-text-primary">
-      <div className="container px-0">
-        <div className="border-t border-border -mt-10" />
-        <div className="flex justify-between items-center py-12 md:py-16">
+      <div className="container px-4 sm:px-6 md:px-8 lg:px-10">
+        <div className="border-t border-border" />
+        <div className="flex justify-between items-center py-12">
           <a
             href="mailto:hello@jillesdesign.com"
             aria-label="Get in touch by email"
-            className="text-5xl sm:text-6xl md:text-8xl lg:text-[96px] font-medium leading-[1.1] tracking-tighter text-text-primary hover:text-accent transition-colors duration-300 ease-in-out"
+            className="text-5xl sm:text-6xl md:text-8xl lg:text-[96px] font-medium leading-[1.1] tracking-tighter text-text-primary"
           >
-            Get in touch
+            <AnimatedText text="Get in touch" />
           </a>
           <a
             href="mailto:hello@jillesdesign.com"
             aria-label="Get in touch by email"
-            className="group text-5xl sm:text-6xl md:text-8xl lg:text-[96px] font-normal leading-[1.1] text-text-primary hover:text-accent transition-colors duration-300 ease-in-out"
+            className="group text-5xl sm:text-6xl md:text-8xl lg:text-[96px] font-normal leading-[1.1] text-text-primary"
           >
-            <span className="inline-block text-4xl sm:text-5xl md:text-6xl lg:text-7xl transition-transform duration-300 ease-in-out group-hover:translate-x-4">
+            <span className="inline-block text-4xl sm:text-5xl md:text-6xl lg:text-7xl transition-transform duration-200 ease-out group-hover:translate-x-2">
               →
             </span>
           </a>
         </div>
-        <div className="border-b border-border mb-8" />
-        
-        <footer className="bg-background text-foreground pb-16">
+        <div className="border-b border-border" />
+        <footer className="bg-background text-foreground pt-14 pb-8">
           <div className="w-full max-w-[1800px] mx-auto px-4">
             <div className="flex flex-col space-y-12">
               {/* Mobile Layout */}
@@ -153,7 +184,7 @@ const ContactCTA = () => {
                 </div>
                 
                 {/* Accepting New Projects */}
-                <div className="mt-8 pt-8 border-t border-border">
+                <div className="mt-8 pt-8 border-t border-border -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10">
                   <h3 className="text-sm text-text-muted mb-4">Accepting new projects</h3>
                   <ul className="space-y-3">
                     {contactLinks.map((link) => (
@@ -190,7 +221,7 @@ const ContactCTA = () => {
                   <ul className="flex flex-col">
                     {navLinks.map((link) => (
                       <li key={link.label}>
-                        <Link href={link.href} className="text-sm font-normal text-foreground hover:text-accent transition-colors duration-300 ease-in-out py-1 block">
+                        <Link href={link.href} className="text-sm font-normal text-foreground hover:text-accent transition-colors duration-300 ease-in-out block">
                           {link.label}
                         </Link>
                       </li>
@@ -202,7 +233,7 @@ const ContactCTA = () => {
                   <h3 className="text-sm text-text-muted">Services</h3>
                   <div className="flex flex-col">
                     {services.map((service) => (
-                      <p key={service} className="text-sm text-foreground mb-2">
+                      <p key={service} className="text-sm text-foreground">
                         {service}
                       </p>
                     ))}

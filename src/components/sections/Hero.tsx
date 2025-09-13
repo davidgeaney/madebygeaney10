@@ -42,7 +42,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div className="pt-6 pb-10 px-4 sm:px-6 md:px-8 lg:px-12 bg-background text-foreground">
+    <div className="pt-8 pb-10 px-4 sm:px-6 md:px-8 lg:px-12 bg-background text-foreground">
       {/* Mobile Menu */}
       <MobileMenu />
       
