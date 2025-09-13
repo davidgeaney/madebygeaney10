@@ -98,15 +98,15 @@ const Hero = () => {
         </div>
 
         {/* About Section - Full width on mobile, normal on desktop */}
-        <div className="md:max-w-lg w-full">
+        <div className="md:max-w-lg w-full mt-8 md:mt-0">
           <p className="text-base font-medium text-muted-foreground">About Us</p>
           <p className="text-base font-normal text-text-muted max-w-sm">
             We build fully custom websites quickly and efficiently. Working with businesses that care about smart design, strong functionality, and results they can see.
           </p>
         </div>
 
-        {/* Start Project Button - Full width on mobile, auto on desktop */}
-        <div className="w-full md:w-auto">
+        {/* Start Project Button - Hidden on mobile, visible on desktop */}
+        <div className="hidden md:block w-full md:w-auto">
           <a
             href="mailto:hello@jillesdesign.com"
             className="inline-flex items-center text-md font-medium hover:text-accent transition-colors w-full md:w-auto justify-center md:justify-start"

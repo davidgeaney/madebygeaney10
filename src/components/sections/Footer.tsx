@@ -83,51 +83,69 @@ export default function Footer() {
   return (
     <footer className="bg-background text-foreground pb-32">
       <div className="w-full max-w-[1800px] mx-auto px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-8">
-          <div className="flex flex-col space-y-4 pl-4">
-            <p className="text-sm text-text-muted leading-relaxed">
-              Jilles Design
-              <br />
-              Amsterdam
-            </p>
-            <TimezoneClock />
-          </div>
+        <div className="flex flex-col space-y-12">
+          {/* Top Section - Jilles Design & Navigation */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8">
+            <div className="space-y-4">
+              <p className="text-sm text-text-muted leading-relaxed">
+                Jilles Design
+                <br />
+                Amsterdam
+              </p>
+              <div className="hidden sm:block">
+                <TimezoneClock />
+              </div>
+            </div>
 
-          <div className="flex flex-col space-y-4 pl-4">
-            <h3 className="text-sm text-text-muted">Navigation</h3>
-            <ul>
-              {navLinks.map((link) => (
-                <li key={link.label} className="-my-1">
-                  <Link href={link.href} className="text-sm font-normal text-foreground hover:text-accent transition-colors duration-300 ease-in-out py-1 block">
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="flex flex-col space-y-6 pl-4">
-            <h3 className="text-sm text-text-muted">Services</h3>
-            <div className="flex flex-col">
-              {services.map((service) => (
-                <p key={service} className="text-sm text-foreground">
-                  {service}
-                </p>
-              ))}
+            <div className="space-y-4">
+              <h3 className="text-sm text-text-muted">Navigation</h3>
+              <ul className="grid grid-cols-2 gap-x-4">
+                {navLinks.map((link) => (
+                  <li key={link.label} className="mb-2">
+                    <Link href={link.href} className="text-sm font-normal text-foreground hover:text-accent transition-colors duration-300 ease-in-out py-1 block">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-          
-          <div className="flex flex-col space-y-6">
-            <h3 className="text-sm text-text-muted">Accepting new projects</h3>
-            <ul>
-              {contactLinks.map((link) => (
-                <li key={link.label}>
-                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-sm text-foreground hover:text-accent transition-colors duration-300 ease-in-out">
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
+
+          {/* Bottom Section - Services & Contact */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-8 pt-8 border-t border-border">
+            <div className="space-y-4">
+              <h3 className="text-sm text-text-muted">Services</h3>
+              <div className="grid grid-cols-2 gap-x-4">
+                {services.map((service) => (
+                  <p key={service} className="text-sm text-foreground mb-2">
+                    {service}
+                  </p>
+                ))}
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <h3 className="text-sm text-text-muted">Accepting new projects</h3>
+              <ul className="space-y-2">
+                {contactLinks.map((link) => (
+                  <li key={link.label}>
+                    <a 
+                      href={link.href} 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="text-sm text-foreground hover:text-accent transition-colors duration-300 ease-in-out flex items-center"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Mobile Clock */}
+          <div className="sm:hidden pt-8 border-t border-border">
+            <TimezoneClock />
           </div>
         </div>
       </div>
