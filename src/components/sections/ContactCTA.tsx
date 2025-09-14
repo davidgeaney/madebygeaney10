@@ -2,6 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
+
+// Dynamically import the ContactPanel component with no SSR
+const ContactPanel = dynamic(
+  () => import('@/components/ContactPanel'),
+  { ssr: false }
+);
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -114,18 +121,19 @@ const AnimatedText = ({ text }: { text: string }) => {
 };
 
 const ContactCTA = () => {
+  const [isContactOpen, setIsContactOpen] = useState(false);
   return (
     <section className="bg-background text-text-primary">
       <div className="container px-4 sm:px-6 md:px-8 lg:px-10">
         <div className="border-t border-border" />
         <div className="flex justify-between items-center py-12">
-          <a
-            href="mailto:hello@jillesdesign.com"
-            aria-label="Get in touch by email"
-            className="text-5xl sm:text-6xl md:text-8xl lg:text-[96px] font-medium leading-[1.1] tracking-tighter text-text-primary"
+          <button
+            onClick={() => setIsContactOpen(true)}
+            aria-label="Open contact form"
+            className="text-5xl sm:text-6xl md:text-8xl lg:text-[96px] font-medium leading-[1.1] tracking-tighter text-text-primary text-left"
           >
             <AnimatedText text="Get in touch" />
-          </a>
+          </button>
           <a
             href="mailto:hello@jillesdesign.com"
             aria-label="Get in touch by email"
@@ -263,6 +271,12 @@ const ContactCTA = () => {
           </div>
         </footer>
       </div>
+      
+      {/* Contact Panel */}
+      <ContactPanel 
+        isOpen={isContactOpen} 
+        onClose={() => setIsContactOpen(false)} 
+      />
     </section>
   );
 };

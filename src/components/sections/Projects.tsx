@@ -48,9 +48,9 @@ interface Project {
 
 const Projects = () => {
   return (
-    <div className="space-y-8 w-full max-w-[calc(100%-1rem)] mx-auto">
+    <div className="space-y-8 w-full px-0">
       {projectImages.map((project) => (
-        <div key={project.id} className="relative w-full h-[110vh] min-h-[900px] bg-gray-100 rounded-2xl overflow-hidden">
+        <div key={project.id} className="relative w-full h-[120vh] min-h-[1000px] bg-gray-100 rounded-xl overflow-hidden">
           <div className="absolute inset-0 w-full h-full overflow-hidden">
             <div className="relative w-full h-full">
               <img
