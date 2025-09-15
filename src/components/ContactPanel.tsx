@@ -73,17 +73,18 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
     if (isOpen) {
       // Prevent body scroll when panel is open
       document.body.style.overflow = 'hidden';
-      // Add a small delay to allow the component to mount before starting the animation
+      // Add a small delay to ensure the component is mounted before starting the animation
       const timer = setTimeout(() => {
         setIsVisible(true);
-      }, 10);
+      }, 50);
       return () => {
         clearTimeout(timer);
-        document.body.style.overflow = 'auto';
+        // Don't reset overflow here, let the timeout in handleBackdropClick handle it
       };
     } else {
+      // Start the close animation
       setIsVisible(false);
-      document.body.style.overflow = 'auto';
+      // Don't reset overflow here, let the timeout in handleBackdropClick handle it
     }
   }, [isOpen]);
 
@@ -113,8 +114,9 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
       setIsVisible(false);
       // Wait for the animation to complete before calling onClose
       const timer = setTimeout(() => {
+        document.body.style.overflow = 'auto';
         onClose();
-      }, 300); // Match this duration with your CSS transition duration
+      }, 1200); // Match this with the CSS transition duration
       return () => clearTimeout(timer);
     }
   };
@@ -125,26 +127,38 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
     <div className="fixed inset-0 z-50 overflow-hidden" style={{ overflow: 'hidden' }}>
       {/* Left side blurred content */}
       <div 
-        className={`fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/80 backdrop-blur-sm transition-all duration-500 ${
           isVisible ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={handleBackdropClick}
         style={{
-          transition: 'opacity 0.3s ease-in-out',
-          zIndex: 49 // Ensure it's below the panel but above everything else
+          zIndex: 49,
+          transitionProperty: 'opacity, backdrop-filter',
+          transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
+          transitionDuration: '500ms'
         }}
       />
       
       {/* Panel */}
       <div 
-        className={`fixed inset-y-0 right-0 w-1/2 bg-black text-white shadow-xl transform transition-transform duration-300 ease-in-out ${
+        className={`fixed inset-y-0 right-0 w-1/2 bg-black text-white shadow-xl transform ${
           isVisible ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{
-          zIndex: 50 // Ensure it's above the overlay
+          zIndex: 50,
+          willChange: 'transform',
+          transition: 'transform 1500ms cubic-bezier(0.22, 1, 0.36, 1)'
         }}
       >
-        <div className="h-full flex flex-col overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
+        <div 
+          className="h-full flex flex-col overflow-y-auto" 
+          style={{ 
+            WebkitOverflowScrolling: 'touch',
+            opacity: isVisible ? 1 : 0,
+            transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+            transition: 'opacity 800ms ease-out 300ms, transform 800ms cubic-bezier(0.22, 1, 0.36, 1) 300ms'
+          }}
+        >
           {/* Progress bar */}
           <div className="h-1 bg-gray-800 relative">
             <div 

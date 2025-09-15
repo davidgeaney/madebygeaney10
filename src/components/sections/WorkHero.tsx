@@ -30,8 +30,38 @@ const WorkHero = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Don't render anything on mobile as we'll use the MobileMenu
-  if (isMobile) return null;
+  // Show MobileMenu on mobile devices
+  if (isMobile) {
+    return (
+      <div className="pt-8 pb-20 px-4 bg-background">
+        <div className="w-full max-w-[1600px] mx-auto">
+          <div className="flex justify-between items-center">
+            <Link href="/" className="hover:opacity-80 transition-opacity">
+              <Image 
+                src="/madebygeaneylogo.svg" 
+                alt="MADE BY GEANEY" 
+                width={90} 
+                height={18}
+                className="h-[18px] w-auto"
+                priority
+              />
+            </Link>
+            <MobileMenu />
+          </div>
+          
+          {/* Page Title for Mobile */}
+          <div className="mt-16 mb-8">
+            <h1 className="text-3xl font-medium">
+              Selected works 24' - present
+            </h1>
+          </div>
+          
+          {/* Projects Section */}
+          <Projects />
+        </div>
+      </div>
+    );
+  }
 
   // Projects are now managed in the Projects component
 
@@ -88,7 +118,7 @@ const WorkHero = () => {
           <span className="text-2xl md:text-3xl lg:text-4xl font-medium mr-48 md:mr-64 lg:mr-80">(01)</span>
           <div className="flex-1 text-left">
             <h1 className="text-2xl md:text-4xl lg:text-5xl font-medium">
-              Selected works 18' - present
+              Selected works 24' - present
             </h1>
           </div>
           <div className="text-4xl ml-8 md:ml-16 lg:ml-24">

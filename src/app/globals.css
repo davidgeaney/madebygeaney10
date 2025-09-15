@@ -178,6 +178,17 @@
     font-family: var(--font-primary);
     font-size: 16px;
     line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Ensure consistent typography for all text elements */
+  a, button, input, textarea, select, p, span, div, li {
+    font-family: inherit;
+    letter-spacing: 0.01em;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   h1 {

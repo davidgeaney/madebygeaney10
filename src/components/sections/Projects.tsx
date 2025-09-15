@@ -50,13 +50,13 @@ const Projects = () => {
   return (
     <div className="space-y-8 w-full px-0">
       {projectImages.map((project) => (
-        <div key={project.id} className="relative w-full h-[120vh] min-h-[1000px] bg-gray-100 rounded-xl overflow-hidden">
+        <div key={project.id} className="relative w-full h-auto md:h-[120vh] min-h-[500px] md:min-h-[1000px] bg-gray-100 rounded-xl overflow-hidden">
           <div className="absolute inset-0 w-full h-full overflow-hidden">
             <div className="relative w-full h-full">
               <img
                 src={project.image}
                 alt={project.alt}
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover object-center"
                 onError={(e) => {
                   console.error('Image failed to load:', project.image);
                   console.log('Error details:', e);
