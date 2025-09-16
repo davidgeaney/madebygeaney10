@@ -138,17 +138,56 @@ const ServicesHero: React.FC = () => {
             </Link>
             <MobileMenu />
           </div>
-          <div className="mt-16 mb-8">
-            <h1 className="text-3xl font-medium">
-              Services
-            </h1>
-          </div>
-          <div className="space-y-8">
-            <div className="space-y-8">
-              <p className="text-2xl">
-                {services.intro.text}
-              </p>
-              {/* Rest of the mobile content */}
+          
+          <div className="mt-10 mb-8 px-4">
+            <span className="text-base font-medium mb-2 block">
+              {services.intro.number}
+            </span>
+            <p className="text-lg font-medium mb-8">
+              {services.intro.text}
+            </p>
+            
+            <div className="space-y-6">
+              <div className="grid grid-cols-2 gap-4">
+                {services.categories.slice(0, 2).map((category, index) => (
+                  <div key={index} className="mb-6">
+                    <h2 className="text-sm font-normal mb-2 text-text-muted">{category.title}</h2>
+                    <ul className="space-y-1">
+                      {category.items.map((item, itemIndex) => (
+                        <li key={itemIndex} className="text-xs text-foreground leading-tight">
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4">
+                <div className="mb-6">
+                  <h2 className="text-sm font-normal mb-2 text-text-muted">
+                    {services.categories[2].title}
+                  </h2>
+                  <ul className="space-y-1">
+                    {services.categories[2].items.map((item, index) => (
+                      <li key={index} className="text-xs text-foreground leading-tight">
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <div className="mb-6">
+                  <h2 className="text-sm font-normal mb-2 text-text-muted">
+                    <a 
+                      href="mailto:hello@madebygeaney.com" 
+                      className="hover:opacity-80 transition-opacity whitespace-nowrap text-xs"
+                    >
+                      Let's Work Together →
+                    </a>
+                  </h2>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -242,11 +281,6 @@ const ServicesHero: React.FC = () => {
           </div>
         </div>
 
-      </div>
-
-      {/* Contact CTA */}
-      <div className="mt-24 md:mt-32">
-        <ContactCTA />
       </div>
     </div>
   );

@@ -6,11 +6,7 @@ export default function WorkPage() {
     <div className="min-h-screen bg-background">
       <main className="m-0 p-0">
         <WorkHero />
-        <div className="relative">
-          <div>
-            <ContactCTA />
-          </div>
-        </div>
+        <ContactCTA />
       </main>
     </div>
   );

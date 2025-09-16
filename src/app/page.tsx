@@ -7,12 +7,8 @@ export default function HomePage() {
     <div className="min-h-screen bg-background">
       <main className="m-0 p-0">
         <Hero />
-        <div className="relative">
-          <Portfolio />
-          <div>
-            <ContactCTA />
-          </div>
-        </div>
+        <Portfolio />
+        <ContactCTA />
       </main>
     </div>
   );

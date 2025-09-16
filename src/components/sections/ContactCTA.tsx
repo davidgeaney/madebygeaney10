@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
 
 // Dynamically import the ContactPanel component with no SSR
 const ContactPanel = dynamic(
@@ -91,19 +92,7 @@ const TimezoneClock = () => {
 const AnimatedText = ({ text }: { text: string }) => {
   return (
     <span className="inline-block group">
-      <style jsx>{`
-        @keyframes floatUp {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-16px); }
-        }
-        .float-char {
-          display: inline-block;
-          transition: transform 0.2s ease-in-out;
-        }
-        .group:hover .float-char {
-          animation: floatUp 0.4s ease-in-out;
-        }
-      `}</style>
+      <style jsx>{"\n        @keyframes fadeInUp {\n          from {\n            opacity: 0;\n            transform: translateY(4px) scale(0.95);\n          }\n          to {\n            opacity: 1;\n            transform: translateY(0) scale(1);\n          }\n        }\n        .float-char {\n          display: inline-block;\n          opacity: 0;\n          transform: translateY(4px) scale(0.95);\n          animation: fadeInUp 0.4s forwards;\n          animation-timing-function: cubic-bezier(0.2, 0, 0.2, 1);\n          transition: transform 0.2s ease, opacity 0.2s ease;\n        }\n        .group:hover .float-char {\n          transform: translateY(-2px);\n        }\n      "}</style>
       {text.split('').map((char, i) => (
         <span 
           key={i} 
@@ -122,31 +111,32 @@ const AnimatedText = ({ text }: { text: string }) => {
 
 const ContactCTA = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const pathname = usePathname();
   return (
     <section className="bg-background text-text-primary">
-      <div className="container px-4 sm:px-6 md:px-8 lg:px-10">
+      <div className="container px-4">
         <div className="border-t border-border" />
-        <div className="flex justify-between items-center py-12">
+        <div className="flex justify-between items-center py-6 sm:py-8 md:py-10 lg:py-12">
           <button
             onClick={() => setIsContactOpen(true)}
             aria-label="Open contact form"
-            className="text-5xl sm:text-6xl md:text-8xl lg:text-[96px] font-medium leading-[1.1] tracking-tighter text-text-primary text-left"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[96px] font-medium leading-[1.1] tracking-[-0.02em] text-text-primary text-left"
           >
             <AnimatedText text="Get in touch" />
           </button>
           <a
             href="mailto:hello@jillesdesign.com"
             aria-label="Get in touch by email"
-            className="group text-5xl sm:text-6xl md:text-8xl lg:text-[96px] font-normal leading-[1.1] text-text-primary"
+            className="group text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[96px] font-normal leading-[1.1] text-text-primary"
           >
-            <span className="inline-block text-4xl sm:text-5xl md:text-6xl lg:text-7xl transition-transform duration-200 ease-out group-hover:translate-x-2">
+            <span className="inline-block text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl transition-transform duration-200 ease-out group-hover:translate-x-2">
               →
             </span>
           </a>
         </div>
         <div className="border-b border-border" />
-        <footer className="bg-background text-foreground pt-14 pb-8">
-          <div className="w-full max-w-[1800px] mx-auto px-4">
+        <footer className="bg-background text-foreground pt-14 pb-4">
+          <div className="w-full max-w-[1800px] mx-auto">
             <div className="flex flex-col space-y-12">
               {/* Mobile Layout */}
               <div className="sm:hidden">
@@ -169,8 +159,12 @@ const ContactCTA = () => {
                     <ul className="space-y-2">
                       {navLinks.map((link) => (
                         <li key={link.label}>
-                          <Link href={link.href} className="text-sm text-foreground hover:text-accent transition-colors duration-300 ease-in-out block">
+                          <Link 
+                            href={link.href} 
+                            className="relative group text-sm text-foreground transition-colors block"
+                          >
                             {link.label}
+                            <span className="absolute left-0 -bottom-0.5 h-[0.5px] w-0 bg-foreground transition-all duration-300 ease-out group-hover:w-full" />
                           </Link>
                         </li>
                       ))}
@@ -178,7 +172,7 @@ const ContactCTA = () => {
                   </div>
                   
                   <div>
-                    <h3 className="text-sm text-text-muted mb-4">Services</h3>
+                    <h3 className="text-sm text-text-muted mb-4">Services at a glance</h3>
                     <ul className="space-y-2">
                       {services.map((service) => (
                         <li key={service}>
@@ -201,9 +195,13 @@ const ContactCTA = () => {
                           href={link.href} 
                           target="_blank" 
                           rel="noopener noreferrer" 
-                          className="text-sm text-foreground hover:text-accent transition-colors duration-300 ease-in-out flex items-center"
+                          className="relative group text-sm text-foreground transition-colors flex items-center"
                         >
-                          {link.label}
+                          <span className="relative">
+                            {link.label.replace(' →', '')}
+                            <span className="absolute left-0 -bottom-0.5 h-[0.5px] w-0 bg-foreground transition-all duration-300 ease-out group-hover:w-full" />
+                          </span>
+                          <span className="ml-1">→</span>
                         </a>
                       </li>
                     ))}
@@ -229,8 +227,14 @@ const ContactCTA = () => {
                   <ul className="flex flex-col">
                     {navLinks.map((link) => (
                       <li key={link.label}>
-                        <Link href={link.href} className="text-sm font-normal text-foreground hover:text-accent transition-colors duration-300 ease-in-out block">
-                          {link.label}
+                        <Link 
+                          href={link.href} 
+                          className="group relative text-sm font-normal text-foreground transition-colors block"
+                        >
+                          <span className="relative">
+                            {link.label}
+                            <span className="absolute left-0 -bottom-0.5 h-[0.5px] w-0 bg-foreground transition-all duration-300 ease-out group-hover:w-full" />
+                          </span>
                         </Link>
                       </li>
                     ))}
@@ -238,7 +242,7 @@ const ContactCTA = () => {
                 </div>
 
                 <div className="flex flex-col space-y-6">
-                  <h3 className="text-sm text-text-muted">Services</h3>
+                  <h3 className="text-sm text-text-muted">Services at a glance</h3>
                   <div className="flex flex-col">
                     {services.map((service) => (
                       <p key={service} className="text-sm text-foreground">
@@ -257,9 +261,13 @@ const ContactCTA = () => {
                           href={link.href} 
                           target="_blank" 
                           rel="noopener noreferrer" 
-                          className="text-sm text-foreground hover:text-accent transition-colors duration-300 ease-in-out flex items-center"
+                          className="relative group text-sm text-foreground transition-colors flex items-center"
                         >
-                          {link.label}
+                          <span className="relative">
+                            {link.label.replace(' →', '')}
+                            <span className="absolute left-0 -bottom-0.5 h-[0.5px] w-0 bg-foreground transition-all duration-300 ease-out group-hover:w-full" />
+                          </span>
+                          <span className="ml-1">→</span>
                         </a>
                       </li>
                     ))}
