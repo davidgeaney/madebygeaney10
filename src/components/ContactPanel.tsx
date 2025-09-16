@@ -11,7 +11,10 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
+    projectType: '',
+    serviceType: '',
     name: '',
+    company: '',
     email: '',
     phone: '',
     message: '',
@@ -38,7 +41,7 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
     'Other / Unsure'
   ];
 
-  const totalSteps = 8;
+  const totalSteps = 5;
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -98,14 +101,22 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (currentStep === 1) {
-      handleNext();
-    } else if (currentStep === 2) {
-      handleNext();
-    } else if (currentStep === 3) {
-      // Handle form submission here when we reach the final step
-      console.log('Form submitted:', formData);
+    
+    // Basic validation
+    if (!formData.name || !formData.email || !formData.message) {
+      alert('Please fill in all required fields');
+      return;
     }
+    
+    // Log the form data
+    console.log('Form submitted:', formData);
+    
+    // Here you would typically send the data to your backend
+    // For now, we'll just show a success message
+    alert('Thank you for your submission! We\'ll be in touch soon.');
+    
+    // Close the form
+    onClose();
   };
 
   const handleBackdropClick = (e: React.MouseEvent) => {
@@ -141,13 +152,16 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
       
       {/* Panel */}
       <div 
-        className={`fixed inset-y-0 right-0 w-1/2 bg-black text-white shadow-xl transform ${
+        className={`fixed inset-y-0 right-0 w-full md:w-1/2 bg-black text-white shadow-xl transform ${
           isVisible ? 'translate-x-0' : 'translate-x-full'
         }`}
         style={{
           zIndex: 50,
           willChange: 'transform',
-          transition: 'transform 1500ms cubic-bezier(0.22, 1, 0.36, 1)'
+          transition: 'transform 500ms cubic-bezier(0.22, 1, 0.36, 1)',
+          maxWidth: '100%',
+          overflowY: 'auto',
+          WebkitOverflowScrolling: 'touch'
         }}
       >
         <div 
@@ -159,19 +173,24 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
             transition: 'opacity 800ms ease-out 300ms, transform 800ms cubic-bezier(0.22, 1, 0.36, 1) 300ms'
           }}
         >
-          {/* Progress bar */}
-          <div className="h-1 bg-gray-800 relative">
+          {/* Progress bar - made more visible */}
+          <div className="w-full h-[2px] bg-gray-800/70 relative overflow-visible">
             <div 
-              className="h-full bg-white absolute left-0 top-0 transition-all duration-300"
-              style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+              className="h-full bg-white absolute left-0 top-0 transition-all duration-500 ease-out"
+              style={{ 
+                width: currentStep === 1 ? '10%' : `${((currentStep - 1) / (totalSteps - 1)) * 100}%`,
+                minWidth: '4px',
+                height: '2px',
+                boxShadow: '0 0 8px rgba(255,255,255,0.8)'
+              }}
             />
           </div>
           
           {/* Header with close button */}
-          <div className="px-8 py-6 flex justify-between items-start">
+          <div className="px-4 md:px-8 py-4 md:py-6 flex justify-between items-start">
             <div>
-              <h1 className="text-lg font-medium mb-4 text-white">(PROJECT DETAILS)</h1>
-              <p className="text-sm text-white max-w-md leading-relaxed">
+              <h1 className="text-sm font-bold mb-3 text-white">(PROJECT DETAILS)</h1>
+              <p className="text-sm font-medium text-white max-w-md leading-relaxed">
                 To get started, we ask that you provide some
                 initial information about your project to help
                 us determine whether our studio is the
@@ -185,157 +204,119 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
               <button
                 type="button"
                 onClick={onClose}
-                className="text-white hover:text-gray-300 focus:outline-none text-sm uppercase tracking-wider mb-4"
+                className="text-white hover:text-gray-300 focus:outline-none text-sm uppercase tracking-wider p-2 -m-2"
               >
                 CLOSE
               </button>
-              <div className="flex flex-col items-center gap-2">
-                <div className="relative w-32 h-48 bg-gray-900 rounded overflow-hidden">
-                  {/* Image placeholder */}
-                  <div className="absolute inset-0 flex items-center justify-center text-gray-600">
-                    <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                </div>
-                <div className="bg-black/70 text-white text-xs px-3 py-1 rounded-full font-mono">
-                  {`0${currentStep}/08`}
-                </div>
-              </div>
             </div>
           </div>
           
           {/* Form Content */}
-          <div className="flex-1 px-8">
+          <div className="flex-1 px-4 md:px-8 flex flex-col justify-end pb-8">
             {currentStep === 1 && (
-              <div className="w-full max-w-2xl">
-                <div className="mb-8">
-                  <h2 className="text-lg font-medium text-white pb-3 border-b border-white/20">
-                    YOUR PERSONAL DETAILS
-                  </h2>
+              <div className="w-full max-w-2xl mt-auto">
+                <div className="mb-6 flex justify-between items-center border-b border-white/20 pb-3">
+                  <h2 className="text-base font-medium text-white">What can we help you with?</h2>
+                  <span className="text-sm text-white/70">(01/05)</span>
                 </div>
                 
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
-                      Name *
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      id="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="block w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
-                      Email Address *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      id="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="block w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
-                      Phone Number *
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      id="phone"
-                      required
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="block w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
-                    />
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                    {['Landing pages', 'Corporate Website', 'Web / App Design', 'Something else'].map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        onClick={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            projectType: option === prev.projectType ? '' : option
+                          }));
+                          handleNext();
+                        }}
+                        className={`py-4 px-4 sm:px-6 text-center rounded-sm font-medium transition-colors text-sm sm:text-base ${
+                          formData.projectType === option
+                            ? 'bg-white text-black'
+                            : 'bg-[#292929] text-white hover:bg-[#3a3a3a]'
+                        }`}
+                      >
+                        {option}
+                      </button>
+                    ))}
                   </div>
                 </form>
               </div>
             )}
 
             {currentStep === 2 && (
-              <div className="w-full max-w-2xl mt-16">
+              <div className="w-full max-w-2xl mt-auto">
                 <div className="mb-8">
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
-                    <h2 className="text-lg font-medium text-white">
-                      YOUR PERSONAL DETAILS
+                    <h2 className="text-base font-medium text-white">
+                      What can we help you with?
                     </h2>
-                    <span className="text-sm text-white/70">(02/08)</span>
+                    <span className="text-sm text-white/70">(02/05)</span>
                   </div>
                 </div>
                 
-                <div className="space-y-8">
-                  <h3 className="text-lg font-medium text-white">
-                    Have you worked with an architect before? <span className="text-red-500">*</span>
-                  </h3>
-                  
-                  <div className="flex gap-4">
-                    <button
-                      type="button"
-                      onClick={() => handleChange({ target: { name: 'workedWithArchitect', value: 'true' } })}
-                      className={`flex-1 py-4 text-center rounded-sm font-medium transition-colors ${
-                        formData.workedWithArchitect === 'true'
-                          ? 'bg-white text-black' 
-                          : 'bg-[#292929] text-white hover:bg-[#3a3a3a]'
-                      }`}
-                    >
-                      YES
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => handleChange({ target: { name: 'workedWithArchitect', value: 'false' } })}
-                      className={`flex-1 py-4 text-center rounded-sm font-medium transition-colors ${
-                        formData.workedWithArchitect === 'false'
-                          ? 'bg-white text-black' 
-                          : 'bg-[#292929] text-white hover:bg-[#3a3a3a]'
-                      }`}
-                    >
-                      NO
-                    </button>
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                    {['Design + Dev', 'Only Design', 'Only Development'].map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        onClick={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            serviceType: option
+                          }));
+                          handleNext();
+                        }}
+                        className={`py-4 px-4 sm:px-6 text-center rounded-sm font-medium transition-colors text-sm sm:text-base ${
+                          formData.serviceType === option
+                            ? 'bg-white text-black'
+                            : 'bg-[#292929] text-white hover:bg-[#3a3a3a]'
+                        }`}
+                      >
+                        {option}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
             )}
 
             {currentStep === 3 && (
-              <div className="w-full max-w-2xl">
+              <div className="w-full max-w-2xl mt-auto">
                 <div className="mb-8">
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
-                    <h2 className="text-lg font-medium text-white">
-                      PROJECT PARTICULARS
+                    <h2 className="text-base font-medium text-white">
+                      What's your budget?
                     </h2>
-                    <span className="text-sm text-white/70">(03/08)</span>
+                    <span className="text-sm text-white/70">(03/05)</span>
                   </div>
                 </div>
                 
-                <div className="space-y-8">
-                  <div className="space-y-1">
-                    <h3 className="text-lg font-medium text-white">
-                      What type of project are you looking for? <span className="text-red-500">*</span>
-                    </h3>
-                    <p className="text-sm text-gray-400">(select multiple if needed)</p>
-                  </div>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    {projectTypeOptions.map((option) => (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                    {[
+                      '€1,000 - €5,000',
+                      '€5,000 - €10,000',
+                      '€10,000 - €25,000',
+                      '€25,000+'
+                    ].map((option) => (
                       <button
                         key={option}
                         type="button"
-                        onClick={() => toggleProjectType(option)}
-                        className={`w-full py-4 px-6 text-left rounded-sm font-medium transition-colors ${
-                          formData.projectTypes.includes(option)
-                            ? 'bg-white text-black' 
+                        onClick={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            budgetRange: option
+                          }));
+                          handleNext();
+                        }}
+                        className={`py-4 px-6 text-center rounded-sm font-medium transition-colors ${
+                          formData.budgetRange === option
+                            ? 'bg-white text-black'
                             : 'bg-[#292929] text-white hover:bg-[#3a3a3a]'
                         }`}
                       >
@@ -348,10 +329,10 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
             )}
 
             {currentStep === 8 && (
-              <div className="w-full max-w-2xl">
+              <div className="w-full max-w-2xl mt-auto">
                 <div className="mb-8">
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
-                    <h2 className="text-lg font-medium text-white">
+                    <h2 className="text-base font-medium text-white">
                       ADDITIONAL INFORMATION
                     </h2>
                     <span className="text-sm text-white/70">(08/08)</span>
@@ -364,7 +345,7 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
                       How did you hear about us? <span className="text-red-500">*</span>
                     </h3>
                     
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
                       {['Friend', 'Family', 'Google', 'Instagram', 'Other'].map((option) => (
                         <button
                           key={option}
@@ -415,10 +396,10 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
             )}
 
             {currentStep === 7 && (
-              <div className="w-full max-w-2xl">
+              <div className="w-full max-w-2xl mt-auto">
                 <div className="mb-8">
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
-                    <h2 className="text-lg font-medium text-white">
+                    <h2 className="text-base font-medium text-white">
                       DESIGN BRIEF
                     </h2>
                     <span className="text-sm text-white/70">(07/08)</span>
@@ -443,127 +424,155 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
               </div>
             )}
 
-            {currentStep === 6 && (
-              <div className="w-full max-w-2xl">
-                <div className="mb-8">
+            {currentStep === 5 && (
+              <div className="w-full max-w-2xl mt-auto">
+                <div className="mb-6">
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
-                    <h2 className="text-lg font-medium text-white">
-                      PROJECT TEAM
+                    <h2 className="text-base font-medium text-white">
+                      Who are you?
                     </h2>
-                    <span className="text-sm text-white/70">(06/08)</span>
+                    <span className="text-sm text-white/70">(05/05)</span>
                   </div>
                 </div>
                 
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-lg font-medium text-white mb-4">
-                      Have you engaged a builder? <span className="text-red-500">*</span>
-                    </h3>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="fullName" className="block text-sm font-medium text-white mb-2">
+                        Full Name <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        id="fullName"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
+                        className="block w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
+                        placeholder="John Doe"
+                      />
+                    </div>
                     
-                    <div className="space-y-3">
-                      <div className="grid grid-cols-2 gap-4">
-                        {['Yes', 'Not yet, but we have someone in mind'].map((option) => (
-                          <button
-                            key={option}
-                            type="button"
-                            onClick={() => handleChange({ target: { name: 'builderEngaged', value: option } })}
-                            className={`w-full text-left py-4 px-6 rounded-sm font-medium transition-colors ${
-                              formData.builderEngaged === option
-                                ? 'bg-white text-black' 
-                                : 'bg-[#292929] text-white hover:bg-[#3a3a3a]'
-                            }`}
-                          >
-                            {option}
-                          </button>
-                        ))}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => handleChange({ target: { name: 'builderEngaged', value: 'No, we would like help with selecting a builder' } })}
-                        className={`w-full text-left py-4 px-6 rounded-sm font-medium transition-colors ${
-                          formData.builderEngaged === 'No, we would like help with selecting a builder'
-                            ? 'bg-white text-black' 
-                            : 'bg-[#292929] text-white hover:bg-[#3a3a3a]'
-                        }`}
-                      >
-                        No, we would like help with selecting a builder
-                      </button>
+                    <div>
+                      <label htmlFor="company" className="block text-sm font-medium text-white mb-2">
+                        Company
+                      </label>
+                      <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        value={formData.company || ''}
+                        onChange={handleChange}
+                        className="block w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
+                        placeholder="Company Name"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
+                        Email <span className="text-red-500">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="block w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
+                        placeholder="you@company.com"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-white mb-2">
+                        Phone
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="block w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
+                        placeholder="+1 (___) ___-____"
+                      />
                     </div>
                   </div>
-
-                  <div className="pt-6">
-                    <label htmlFor="additionalInfo" className="block text-sm font-medium text-white mb-2">
-                      Additional information about your project (optional)
+                  
+                  <div className="pt-2">
+                    <label htmlFor="projectDetails" className="block text-sm font-medium text-white mb-2">
+                      Tell us about your project <span className="text-red-500">*</span>
                     </label>
-                    <input
-                      type="text"
-                      id="additionalInfo"
-                      name="additionalInfo"
-                      value={formData.additionalInfo || ''}
+                    <textarea
+                      id="projectDetails"
+                      name="message"
+                      required
+                      value={formData.message}
                       onChange={handleChange}
-                      placeholder="Tell us more about your project"
-                      className="w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
+                      rows={4}
+                      className="block w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent border-0 shadow-none"
+                      placeholder="Share some details about what you're looking to achieve..."
                     />
                   </div>
-
-                  {formData.builderEngaged === 'Yes' && (
-                    <div className="space-y-4 pt-4">
-                      <div>
-                        <label htmlFor="builderDetails" className="block text-sm font-medium text-white mb-2">
-                          Builder details (if you answered yes above, please provide builder name and other details below)
-                        </label>
-                        <input
-                          type="text"
-                          id="builderDetails"
-                          name="builderDetails"
-                          value={formData.builderDetails}
-                          onChange={handleChange}
-                          placeholder="Builder / Engineer Name"
-                          className="w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
-                        />
-                      </div>
-                      <div>
-                        <input
-                          type="text"
-                          id="builderEngineer"
-                          name="builderEngineer"
-                          value={formData.builderEngineer || ''}
-                          onChange={handleChange}
-                          placeholder="Builder / Engineer"
-                          className="w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
-                        />
-                      </div>
+                  
+                  <div className="flex items-start">
+                    <div className="flex items-center h-5">
+                      <input
+                        id="privacy"
+                        name="privacy"
+                        type="checkbox"
+                        required
+                        className="h-4 w-4 rounded border-gray-700 bg-gray-800 text-indigo-600 focus:ring-indigo-500"
+                      />
                     </div>
-                  )}
-                </div>
+                    <div className="ml-3 text-sm">
+                      <label htmlFor="privacy" className="text-gray-300">
+                        By filling in the form you agree to our{' '}
+                        <a href="/privacy" className="text-white hover:underline">
+                          Privacy Policy
+                        </a>
+                        {' '}and{' '}
+                        <a href="/terms" className="text-white hover:underline">
+                          Terms of Service
+                        </a>.
+                      </label>
+                    </div>
+                  </div>
+                </form>
               </div>
             )}
 
-            {currentStep === 5 && (
-              <div className="w-full max-w-2xl">
+            {currentStep === 4 && (
+              <div className="w-full max-w-2xl mt-auto">
                 <div className="mb-8">
                   <div className="flex justify-between items-center pb-3 border-b border-white/20">
-                    <h2 className="text-lg font-medium text-white">
-                      PROJECT PARTICULARS
+                    <h2 className="text-base font-medium text-white">
+                      When should the project start?
                     </h2>
-                    <span className="text-sm text-white/70">(05/08)</span>
+                    <span className="text-sm text-white/70">(04/08)</span>
                   </div>
                 </div>
                 
-                <div className="space-y-8">
-                  <h3 className="text-lg font-medium text-white">
-                    Project budget range (if known) <span className="text-red-500">*</span>
-                  </h3>
-                  
-                  <div className="grid grid-cols-2 gap-4">
-                    {['< $500k', '$500k - $1 Mil', '$1 Mil - $1.5 Mil', '$1.5 Mil - $2.5 Mil', '$2.5 Mil+'].map((option) => (
+                <div className="space-y-6">
+                  <div className="grid grid-cols-1 gap-3 sm:gap-4">
+                    {[
+                      'ASAP, needed it yesterday',
+                      'I have some time'
+                    ].map((option) => (
                       <button
                         key={option}
                         type="button"
-                        onClick={() => handleChange({ target: { name: 'budgetRange', value: option } })}
-                        className={`w-full py-4 px-6 text-center rounded-sm font-medium transition-colors ${
-                          formData.budgetRange === option
-                            ? 'bg-white text-black' 
+                        onClick={() => {
+                          setFormData(prev => ({
+                            ...prev,
+                            projectTimeline: option
+                          }));
+                          handleNext();
+                        }}
+                        className={`py-4 px-6 text-center rounded-sm font-medium transition-colors ${
+                          formData.projectTimeline === option
+                            ? 'bg-white text-black'
                             : 'bg-[#292929] text-white hover:bg-[#3a3a3a]'
                         }`}
                       >
@@ -573,57 +582,7 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
                   </div>
 
                   <p className="text-xs text-gray-400">
-                    Note: our design fees start from a minimum of $4,500-$6,000 p/m 2 . Project costs can vary significantly depending on your needs. We will create a custom proposal for your project, including detailed fees and inclusions, once after we meet to provide clarity on any costs moving forward.
-                  </p>
-                </div>
-              </div>
-            )}
-
-            {currentStep === 4 && (
-              <div className="w-full max-w-2xl">
-                <div className="mb-8">
-                  <div className="flex justify-between items-center pb-3 border-b border-white/20">
-                    <h2 className="text-lg font-medium text-white">
-                      PROJECT PARTICULARS
-                    </h2>
-                    <span className="text-sm text-white/70">(04/08)</span>
-                  </div>
-                </div>
-                
-                <div className="space-y-8">
-                  <div>
-                    <label htmlFor="projectLocation" className="block text-sm font-medium text-white mb-2">
-                      Where are you planning to build your project? <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      id="projectLocation"
-                      name="projectLocation"
-                      value={formData.projectLocation}
-                      onChange={handleChange}
-                      placeholder="Enter location (e.g., Dublin, Ireland)"
-                      className="w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="projectTimeline" className="block text-sm font-medium text-white mb-2">
-                      Project timeline for designs and/or build (if known)
-                    </label>
-                    <input
-                      type="text"
-                      id="projectTimeline"
-                      name="projectTimeline"
-                      value={formData.projectTimeline}
-                      onChange={handleChange}
-                      placeholder="Enter your estimated timeline"
-                      className="w-full bg-[#292929] rounded-sm py-4 px-5 text-white placeholder-gray-500 focus:outline-none focus:ring-0 focus:border-transparent h-14 border-0 shadow-none"
-                    />
-                  </div>
-
-                  <p className="text-xs text-gray-400">
-                    Note: our studio has an 8-12 week minimum wait time to commence new projects. Project timelines vary depending on a range of factors but we ask that you allow a minimum of 6 to 12 months from commencement to delivery of construction plans ready for build.
+                    Note: Our standard timeline for new projects is 8-12 weeks from initial consultation to project start. We'll work with you to establish a realistic schedule based on your specific needs.
                   </p>
                 </div>
               </div>
@@ -643,36 +602,18 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
                 </button>
               )}
               
-              {currentStep === 1 ? (
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  className="px-6 py-3 text-sm font-medium bg-white text-black rounded-full cursor-pointer flex items-center gap-2"
-                >
-                  NEXT→
-                </button>
-              ) : currentStep === 8 ? (
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  className="px-6 py-3 text-sm font-medium bg-white text-black rounded-full cursor-pointer flex items-center gap-2"
-                >
-                  SUBMIT FORM →
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={handleNext}
-                  disabled={formData.workedWithArchitect === null}
-                  className={`px-6 py-3 text-sm font-medium rounded-full flex items-center gap-2 ${
-                    formData.workedWithArchitect === null
-                      ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                      : 'bg-white text-black cursor-pointer'
-                  }`}
-                >
-                  NEXT→
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={currentStep === totalSteps ? handleSubmit : handleNext}
+                disabled={formData.workedWithArchitect === null && currentStep === 2}
+                className={`px-4 sm:px-6 py-3 text-sm sm:text-base font-medium rounded-full flex items-center justify-center gap-2 ${
+                  formData.workedWithArchitect === null && currentStep === 2
+                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                    : 'bg-white text-black cursor-pointer'
+                }`}
+              >
+                {currentStep === totalSteps ? 'SUBMIT' : 'NEXT→'}
+              </button>
             </div>
           </div>
         </div>

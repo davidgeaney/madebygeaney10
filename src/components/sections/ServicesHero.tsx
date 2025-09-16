@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import MobileMenu from '@/components/ui/MobileMenu';
-import ImageSlider from '@/components/ui/ImageSlider';
 import ContactCTA from './ContactCTA';
 
 const AnimatedText = ({ text }: { text: string }) => {
@@ -243,19 +242,6 @@ const ServicesHero: React.FC = () => {
           </div>
         </div>
 
-      </div>
-
-      {/* Image Slider */}
-      <div className="w-full px-4 md:px-8 mx-auto">
-        <ImageSlider 
-          images={[
-            '/projects/classcoverimage.webp',
-            '/projects/classcoverimage.webp',
-            '/projects/classcoverimage.webp',
-            '/projects/classcoverimage.webp'
-          ]} 
-          className="max-w-[95%] mx-auto"
-        />
       </div>
 
       {/* Contact CTA */}
