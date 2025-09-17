@@ -80,14 +80,21 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
       const timer = setTimeout(() => {
         setIsVisible(true);
       }, 50);
+      
       return () => {
         clearTimeout(timer);
-        // Don't reset overflow here, let the timeout in handleBackdropClick handle it
       };
     } else {
       // Start the close animation
       setIsVisible(false);
-      // Don't reset overflow here, let the timeout in handleBackdropClick handle it
+      // Reset body scroll after animation completes
+      const timer = setTimeout(() => {
+        if (!isOpen) {
+          document.body.style.overflow = 'auto';
+        }
+      }, 500); // Match this with the CSS transition duration
+      
+      return () => clearTimeout(timer);
     }
   }, [isOpen]);
 
@@ -124,11 +131,9 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
       // Start the close animation
       setIsVisible(false);
       // Wait for the animation to complete before calling onClose
-      const timer = setTimeout(() => {
-        document.body.style.overflow = 'auto';
+      setTimeout(() => {
         onClose();
-      }, 1200); // Match this with the CSS transition duration
-      return () => clearTimeout(timer);
+      }, 500); // Match this with the CSS transition duration
     }
   };
 

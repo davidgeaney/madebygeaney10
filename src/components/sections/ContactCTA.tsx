@@ -120,7 +120,7 @@ const ContactCTA = () => {
           <button
             onClick={() => setIsContactOpen(true)}
             aria-label="Open contact form"
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[96px] font-medium leading-[1.1] tracking-[-0.02em] text-text-primary text-left"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-[96px] font-medium leading-[1.1] tracking-[-0.04em] text-text-primary text-left"
           >
             <AnimatedText text="Get in touch" />
           </button>

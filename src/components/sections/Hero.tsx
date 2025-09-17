@@ -109,9 +109,10 @@ const Hero = () => {
         <div className="hidden md:block w-full md:w-auto">
           <a
             href="mailto:hello@jillesdesign.com"
-            className="inline-flex items-center text-md font-medium hover:text-accent transition-colors w-full md:w-auto justify-center md:justify-start"
+            className="group relative inline-flex items-center text-md font-medium text-text-primary transition-colors w-full md:w-auto justify-center md:justify-start"
           >
             Start your project <span className="ml-1">→</span>
+            <span className="absolute left-0 -bottom-0.5 h-[0.5px] w-0 bg-foreground transition-all duration-300 ease-out group-hover:w-full"></span>
           </a>
         </div>
       </div>

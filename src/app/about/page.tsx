@@ -4,17 +4,18 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import MobileMenu from '@/components/ui/MobileMenu';
 import AboutHero from '@/components/sections/AboutHero';
 import FullWidthImage from '@/components/sections/FullWidthImage';
 import WorkApproach from '@/components/sections/WorkApproach';
 import ContactCTA from '@/components/sections/ContactCTA';
 
 const navLinks = [
-  { name: 'Home', href: '/', underlineWidth: '70%' },
-  { name: 'Work', href: '/work', underlineWidth: '45%' },
-  { name: 'About', href: '/about', underlineWidth: '50%' },
-  { name: 'Services', href: '/services', underlineWidth: '70%' },
-  { name: 'Journal (soon)', href: '#', underlineWidth: '100%' },
+  { name: 'Home, ', href: '/', underlineWidth: '70%' },
+  { name: 'Work, ', href: '/work', underlineWidth: '45%' },
+  { name: 'About, ', href: '/about', underlineWidth: '50%' },
+  { name: 'Services, ', href: '/services', underlineWidth: '70%' },
+  { name: 'Journal (soon), ', href: '#', underlineWidth: '100%' },
   { name: 'Contact', href: '/contact', underlineWidth: '65%' },
 ];
 
@@ -23,7 +24,10 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Navigation */}
+      {/* Mobile Menu */}
+      <MobileMenu />
+      
+      {/* Desktop Navigation */}
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center space-x-40">
@@ -62,9 +66,10 @@ export default function AboutPage() {
           <div className="hidden md:block w-full md:w-auto">
             <a
               href="mailto:hello@madebygeaney.com"
-              className="inline-flex items-center text-md font-medium hover:text-accent transition-colors w-full md:w-auto justify-center md:justify-start"
+              className="group relative inline-flex items-center text-md font-medium text-text-primary transition-colors w-full md:w-auto justify-center md:justify-start"
             >
               Start your project <span className="ml-1">→</span>
+              <span className="absolute left-0 -bottom-0.5 h-[0.5px] w-0 bg-foreground transition-all duration-300 ease-out group-hover:w-full"></span>
             </a>
           </div>
         </div>
