@@ -25,7 +25,10 @@ export default function Navigation() {
   );
 
   const CtaButton = ({ isMobile = false }: { isMobile?: boolean }) => (
-    <a href="mailto:hello@jillesdesign.com" className={`transition-colors whitespace-nowrap ${isMobile ? 'text-3xl font-normal text-text-primary hover:text-accent' : 'text-sm font-medium text-text-secondary hover:text-text-primary'}`}>
+    <a 
+      href="mailto:hello@jillesdesign.com" 
+      className={`transition-colors whitespace-nowrap ${isMobile ? 'text-3xl font-normal text-text-primary hover:text-accent' : 'text-xs md:text-sm font-medium text-text-secondary hover:text-text-primary'}`}
+    >
       Start your project →
     </a>
   );
@@ -71,16 +74,16 @@ export default function Navigation() {
             </nav>
           </div>
           
-          <div className="flex items-center gap-6">
-            <div className="hidden md:block">
+          <div className="flex items-center gap-4 md:gap-6">
+            <div className="hidden md:block whitespace-nowrap">
               <CtaButton />
             </div>
             <button
               onClick={() => setIsMenuOpen(true)}
-              className="lg:hidden p-2 -mr-2"
+              className="lg:hidden flex items-center justify-center w-10 h-10 -mr-1"
               aria-label="Open menu"
             >
-              <Menu size={24} className="text-text-primary" />
+              <Menu size={20} className="text-text-primary" />
             </button>
           </div>
         </div>

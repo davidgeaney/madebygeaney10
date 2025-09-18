@@ -122,13 +122,21 @@ const ServicesHero: React.FC = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    // Set initial state on component mount
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
     
+    // Set initial value
     checkMobile();
+    
+    // Add event listener for window resize
     window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   // Navigation bar with logo and CTA
@@ -181,8 +189,8 @@ const ServicesHero: React.FC = () => {
     </div>
   );
 
-  // Show MobileMenu on mobile devices
-  if (isMobile) {
+  // Mobile View
+  if (typeof window !== 'undefined' && window.innerWidth < 768) {
     return (
       <div className="min-h-screen bg-background">
         {/* Mobile Menu */}
@@ -208,13 +216,13 @@ const ServicesHero: React.FC = () => {
             </div>
           </div>
           
-          <div className="mt-10 mb-8 px-4">
-            <span className="text-base font-medium mb-2 block">
+          <div className="mt-2 mb-12 px-4" style={{ marginTop: '0.5rem' }}>
+            <span className="text-4xl md:text-5xl lg:text-6xl font-medium mb-6 block">
               {services.intro.number}
             </span>
-            <p className="text-lg font-medium mb-8">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium mb-16 leading-tight">
               {services.intro.text}
-            </p>
+            </h1>
             
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">

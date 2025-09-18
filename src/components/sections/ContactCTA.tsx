@@ -116,7 +116,7 @@ const ContactCTA = () => {
     <section className="bg-background text-text-primary">
       <div className="container px-4">
         <div className="border-t border-border" />
-        <div className="flex justify-between items-center py-6 sm:py-8 md:py-10 lg:py-12">
+        <div className="flex justify-between items-center py-8 sm:py-10 md:py-12">
           <button
             onClick={() => setIsContactOpen(true)}
             aria-label="Open contact form"
@@ -135,17 +135,17 @@ const ContactCTA = () => {
           </a>
         </div>
         <div className="border-b border-border" />
-        <footer className="bg-background text-foreground pt-14 pb-4">
+        <footer className="bg-background text-foreground pt-12 pb-6">
           <div className="w-full max-w-[1800px] mx-auto">
             <div className="flex flex-col space-y-12">
               {/* Mobile Layout */}
               <div className="sm:hidden">
-                {/* Jilles Design & Clock */}
+                {/* Made By Geaney & Clock */}
                 <div className="mb-8">
                   <p className="text-sm text-text-muted leading-relaxed mb-2">
-                    Jilles Design
+                    Made By Geaney
                     <br />
-                    Amsterdam
+                    Ireland
                   </p>
                   <div>
                     <TimezoneClock />
@@ -186,7 +186,7 @@ const ContactCTA = () => {
                 </div>
                 
                 {/* Accepting New Projects */}
-                <div className="mt-8 pt-8 border-t border-border -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10">
+                <div className="mt-6 -mx-4 sm:-mx-6 md:-mx-8 lg:-mx-10 px-4 sm:px-6 md:px-8 lg:px-10">
                   <h3 className="text-sm text-text-muted mb-4">Accepting new projects</h3>
                   <ul className="space-y-3">
                     {contactLinks.map((link) => (
@@ -213,9 +213,9 @@ const ContactCTA = () => {
               <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-6 gap-x-8">
                 <div className="flex flex-col space-y-4">
                   <p className="text-sm text-text-muted leading-relaxed">
-                    Jilles Design
+                    Made By Geaney
                     <br />
-                    Amsterdam
+                    Ireland
                   </p>
                   <div>
                     <TimezoneClock />
@@ -252,7 +252,7 @@ const ContactCTA = () => {
                   </div>
                 </div>
                 
-                <div className="flex flex-col space-y-6">
+                <div className="flex flex-col space-y-8">
                   <h3 className="text-sm text-text-muted">Accepting new projects</h3>
                   <ul className="space-y-2">
                     {contactLinks.map((link) => (

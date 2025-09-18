@@ -194,14 +194,12 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
           {/* Header with close button */}
           <div className="px-4 md:px-8 py-4 md:py-6 flex justify-between items-start">
             <div>
-              <h1 className="text-sm font-bold mb-3 text-white">(PROJECT DETAILS)</h1>
+              <h1 className="text-sm font-bold mb-3 text-white">LET'S TALK</h1>
               <p className="text-sm font-medium text-white max-w-md leading-relaxed">
-                To get started, we ask that you provide some
-                initial information about your project to help
-                us determine whether our studio is the
-                right fit. Our team will review the details and
-                be in touch to discuss next steps within 5
-                business days.
+                Share some details about your web project and goals.
+                We'll review your information and get back to you within
+                a day to discuss how we can bring your vision to life.
+                All inquiries are confidential and there's no obligation.
               </p>
             </div>
             
@@ -607,18 +605,15 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
                 </button>
               )}
               
-              <button
-                type="button"
-                onClick={currentStep === totalSteps ? handleSubmit : handleNext}
-                disabled={formData.workedWithArchitect === null && currentStep === 2}
-                className={`px-4 sm:px-6 py-3 text-sm sm:text-base font-medium rounded-full flex items-center justify-center gap-2 ${
-                  formData.workedWithArchitect === null && currentStep === 2
-                    ? 'bg-gray-400 text-gray-600 cursor-not-allowed'
-                    : 'bg-white text-black cursor-pointer'
-                }`}
-              >
-                {currentStep === totalSteps ? 'SUBMIT' : 'NEXT→'}
-              </button>
+              {currentStep === totalSteps && (
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  className="px-6 py-3 text-sm sm:text-base font-medium rounded-full bg-white text-black hover:bg-gray-100 transition-colors"
+                >
+                  SUBMIT
+                </button>
+              )}
             </div>
           </div>
         </div>

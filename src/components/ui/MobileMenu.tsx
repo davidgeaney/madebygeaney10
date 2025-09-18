@@ -45,12 +45,12 @@ const MobileMenu = () => {
       {/* Modern Hamburger Button - Only shows two lines */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-6 right-6 z-50 flex flex-col items-center justify-center w-10 h-10 focus:outline-none group"
+        className="fixed top-4 right-4 z-50 flex items-center justify-center w-10 h-10 rounded-full bg-white/80 hover:bg-gray-100 transition-colors focus:outline-none group border border-gray-200 shadow-sm"
         aria-label="Open menu"
       >
         <div className="space-y-1.5">
-          <span className="block w-6 h-[1px] bg-foreground transition-transform duration-300 group-hover:translate-x-1"></span>
-          <span className="block w-6 h-[1px] bg-foreground transition-transform duration-300 group-hover:translate-x-1"></span>
+          <span className="block w-5 h-[1.5px] bg-black transition-transform duration-300 group-hover:translate-x-0.5"></span>
+          <span className="block w-5 h-[1.5px] bg-black transition-transform duration-300 group-hover:translate-x-0.5"></span>
         </div>
       </button>
 
@@ -62,7 +62,7 @@ const MobileMenu = () => {
       
       {/* Dropdown Menu */}
       <div 
-        className={`fixed top-8 right-4 w-72 bg-white rounded-2xl shadow-2xl z-50 transition-all duration-300 ease-out transform ${isOpen ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0 pointer-events-none'}`}
+        className={`fixed top-4 right-4 w-72 bg-white rounded-2xl shadow-2xl z-50 transition-all duration-300 ease-out transform ${isOpen ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0 pointer-events-none'}`}
       >
         {/* Close Button */}
         <button

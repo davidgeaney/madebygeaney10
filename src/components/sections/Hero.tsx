@@ -106,10 +106,10 @@ const Hero = () => {
         </div>
 
         {/* Start Project Button - Hidden on mobile, visible on desktop */}
-        <div className="hidden md:block w-full md:w-auto">
+        <div className="hidden md:block whitespace-nowrap">
           <a
             href="mailto:hello@jillesdesign.com"
-            className="group relative inline-flex items-center text-md font-medium text-text-primary transition-colors w-full md:w-auto justify-center md:justify-start"
+            className="group relative inline-flex items-center text-sm md:text-base font-medium text-text-primary transition-colors"
           >
             Start your project <span className="ml-1">→</span>
             <span className="absolute left-0 -bottom-0.5 h-[0.5px] w-0 bg-foreground transition-all duration-300 ease-out group-hover:w-full"></span>
