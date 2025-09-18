@@ -1,12 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  optimizeFonts: {
-    display: 'swap',
-    preload: true,
-    defaultFontFamily: {
-      sans: ['PPNeue Montreal', 'sans-serif'],
-    },
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },
