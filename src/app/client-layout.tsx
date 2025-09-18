@@ -23,6 +23,13 @@ export default function ClientRootLayout({
 
   return (
     <>
+      <head>
+        <link
+          rel="preconnect"
+          href={typeof window !== 'undefined' ? window.location.origin : ''}
+          crossOrigin="anonymous"
+        />
+      </head>
       <Script
         src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/scripts//route-messenger.js"
         strategy="afterInteractive"
