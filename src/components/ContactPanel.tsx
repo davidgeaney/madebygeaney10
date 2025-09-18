@@ -194,7 +194,7 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
           {/* Header with close button */}
           <div className="px-4 md:px-8 py-4 md:py-6 flex justify-between items-start">
             <div>
-              <h1 className="text-sm font-bold mb-3 text-white">LET'S TALK</h1>
+              <h1 className="text-sm font-bold mb-3 text-white">(LET'S TALK)</h1>
               <p className="text-sm font-medium text-white max-w-md leading-relaxed">
                 Share some details about your web project and goals.
                 We'll review your information and get back to you within
@@ -553,7 +553,7 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
                     <h2 className="text-base font-medium text-white">
                       When should the project start?
                     </h2>
-                    <span className="text-sm text-white/70">(04/08)</span>
+                    <span className="text-sm text-white/70">(04/05)</span>
                   </div>
                 </div>
                 
@@ -584,9 +584,6 @@ const ContactPanel: React.FC<ContactPanelProps> = ({ isOpen, onClose }) => {
                     ))}
                   </div>
 
-                  <p className="text-xs text-gray-400">
-                    Note: Our standard timeline for new projects is 8-12 weeks from initial consultation to project start. We'll work with you to establish a realistic schedule based on your specific needs.
-                  </p>
                 </div>
               </div>
             )}

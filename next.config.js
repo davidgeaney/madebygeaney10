@@ -1,22 +1,39 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: ['cdn.prod.website-files.com', 'localhost'],
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-    ],
-    unoptimized: true, // Temporary to test if it's an optimization issue
+    // Disable image optimization in development
+    unoptimized: true,
+    // Allow all image domains in development
+    domains: ['*'],
+    // Disable image optimization API route in development
+    ...(process.env.NODE_ENV === 'development' ? {
+      loader: 'custom',
+      loaderFile: './imageLoader.js',
+    } : {}),
   },
-  // Add basePath if your site is hosted in a subdirectory
-  // basePath: '/your-base-path',
+  webpack: (config, { isServer }) => {
+    // Fixes npm packages that depend on `fs` module
+    if (!isServer) {
+      config.resolve.fallback.fs = false;
+    }
+    return config;
+  },
 };
+
+// Create a custom image loader for development
+const fs = require('fs');
+const path = require('path');
+
+if (process.env.NODE_ENV === 'development') {
+  fs.writeFileSync(
+    path.join(__dirname, 'imageLoader.js'),
+    `module.exports = function imageLoader({ src, width, quality }) {
+      return '${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}' + src;
+    }`
+  );
+}
 
 module.exports = nextConfig;
