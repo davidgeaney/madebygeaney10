@@ -216,11 +216,11 @@ const ServicesHero: React.FC = () => {
             </div>
           </div>
           
-          <div className="mt-2 mb-12 px-4" style={{ marginTop: '0.5rem' }}>
-            <span className="text-4xl md:text-5xl lg:text-6xl font-medium mb-6 block">
+          <div className="mt-8 mb-12 px-4">
+            <span className="text-3xl font-medium mb-4 block">
               {services.intro.number}
             </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-medium mb-16 leading-tight">
+            <h1 className="text-2xl font-medium mb-12 leading-tight">
               {services.intro.text}
             </h1>
             

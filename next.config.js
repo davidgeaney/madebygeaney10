@@ -3,6 +3,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    optimizeCss: true,
+  },
   images: {
     // Disable image optimization in development
     unoptimized: true,
