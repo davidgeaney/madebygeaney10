@@ -4,7 +4,17 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const MobileMenu = () => {
+interface NavLink {
+  name: string;
+  href: string;
+  isContact?: boolean;
+}
+
+interface MobileMenuProps {
+  onContactClick: () => void;
+}
+
+const MobileMenu: React.FC<MobileMenuProps> = ({ onContactClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -25,12 +35,12 @@ const MobileMenu = () => {
     };
   }, [isOpen]);
 
-  const navLinks = [
+  const navLinks: NavLink[] = [
     { name: 'Home', href: '/' },
     { name: 'Work', href: '/work' },
     { name: 'About', href: '/about' },
     { name: 'Services', href: '/services' },
-    { name: 'Contact', href: '/contact' },
+    { name: 'Contact', href: '#', isContact: true },
   ];
 
   const socialLinks = [
@@ -77,16 +87,30 @@ const MobileMenu = () => {
         
         <nav className="p-6 pt-12">
           {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              className={`flex items-center justify-between text-3xl font-medium leading-none ${pathname === link.href ? 'text-black' : 'text-gray-500'}`}
-            >
-              <span>{link.name}</span>
-              {pathname === link.href && (
-                <span className="w-2 h-2 bg-black rounded-full ml-3 flex-shrink-0"></span>
+            <div key={link.name}>
+              {link.isContact ? (
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onContactClick();
+                    setIsOpen(false);
+                  }}
+                  className="w-full text-left flex items-center justify-between text-3xl font-medium leading-none text-gray-500 hover:text-black transition-colors"
+                >
+                  <span>{link.name}</span>
+                </button>
+              ) : (
+                <Link
+                  href={link.href}
+                  className={`flex items-center justify-between text-3xl font-medium leading-none ${pathname === link.href ? 'text-black' : 'text-gray-500 hover:text-black'} transition-colors`}
+                >
+                  <span>{link.name}</span>
+                  {pathname === link.href && (
+                    <span className="w-2 h-2 bg-black rounded-full ml-3 flex-shrink-0"></span>
+                  )}
+                </Link>
               )}
-            </Link>
+            </div>
           ))}
         </nav>
       </div>

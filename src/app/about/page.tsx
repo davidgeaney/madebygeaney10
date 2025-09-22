@@ -83,16 +83,6 @@ export default function AboutPage() {
       <main className="m-0 p-0">
         <div className="container mx-auto px-4 md:px-6 lg:px-8 pt-32 md:pt-48">
           <AboutHero />
-          
-          {/* Full Width Image Section */}
-          <div className="mt-24 md:mt-32">
-            <FullWidthImage 
-              src="/projects/classcoverimage.webp"
-              alt="ClassCover project showcase"
-              className="mt-16"
-            />
-          </div>
-          
           <WorkApproach />
         </div>
         

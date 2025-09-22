@@ -33,7 +33,7 @@ export default function WorkApproach() {
           </div>
           
           <div className="lg:col-span-8 lg:col-start-4">
-            <h2 className="text-[32px] md:text-[56px] leading-[1.2] font-medium text-black max-w-5xl mb-12">
+            <h2 className="text-2xl md:text-4xl leading-[1.2] font-medium text-black max-w-5xl mb-12">
               We build websites that work. Clear process, fair pricing, and no unnecessary extras.
             </h2>
             

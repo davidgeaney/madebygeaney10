@@ -4,7 +4,10 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import MobileMenu from '../ui/MobileMenu';
+
+const ContactPanel = dynamic(() => import('../ContactPanel'), { ssr: false });
 
 const navLinks = [
   { name: 'Home', href: '/', underlineWidth: '70%' },
@@ -12,7 +15,7 @@ const navLinks = [
   { name: 'About', href: '/about', underlineWidth: '50%' },
   { name: 'Services', href: '/services', underlineWidth: '70%' },
   { name: 'Journal (soon)', href: '#', underlineWidth: '100%' },
-  { name: 'Contact', href: '/contact', underlineWidth: '65%' },
+  { name: 'Contact', href: '#', onClick: true, underlineWidth: '65%' },
 ];
 
 const socialLinks = [
@@ -25,6 +28,7 @@ const socialLinks = [
 const Hero = () => {
   const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -44,7 +48,7 @@ const Hero = () => {
   return (
     <div className="pt-8 pb-10 px-4 sm:px-6 md:px-8 lg:px-12 bg-background text-foreground">
       {/* Mobile Menu */}
-      <MobileMenu />
+      <MobileMenu onContactClick={() => setIsContactOpen(true)} />
       
       <div className="w-full max-w-[1600px] mx-auto flex flex-col md:flex-row md:justify-between md:items-start gap-8 md:gap-10 lg:gap-20">
         {/* Logo */}
@@ -65,7 +69,13 @@ const Hero = () => {
             <Link 
               key={link.name} 
               href={link.href}
-              className={`group relative text-base font-normal transition-colors ${pathname === link.href ? 'text-foreground' : 'text-text-muted hover:text-foreground'}`}
+              onClick={(e) => {
+                if (link.onClick) {
+                  e.preventDefault();
+                  setIsContactOpen(true);
+                }
+              }}
+              className={`group relative text-base font-normal transition-colors cursor-pointer ${pathname === link.href ? 'text-foreground' : 'text-text-muted hover:text-foreground'}`}
             >
               {link.name}
               {pathname !== link.href && (
@@ -116,6 +126,10 @@ const Hero = () => {
           </a>
         </div>
       </div>
+      <ContactPanel 
+        isOpen={isContactOpen} 
+        onClose={() => setIsContactOpen(false)} 
+      />
     </div>
   );
 };
