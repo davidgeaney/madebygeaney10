@@ -1,10 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import MobileMenu from '@/components/ui/MobileMenu';
+
+const ContactPanel = dynamic(() => import('@/components/ContactPanel'), { ssr: false });
 import AboutHero from '@/components/sections/AboutHero';
 import FullWidthImage from '@/components/sections/FullWidthImage';
 import WorkApproach from '@/components/sections/WorkApproach';
@@ -21,11 +24,12 @@ const navLinks = [
 
 export default function AboutPage() {
   const pathname = usePathname();
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-background">
       {/* Mobile Menu */}
-      <MobileMenu />
+      <MobileMenu onContactClick={() => setIsContactOpen(true)} />
       
       {/* Desktop Navigation */}
       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-6">
@@ -87,6 +91,10 @@ export default function AboutPage() {
         </div>
         
         <ContactCTA />
+        <ContactPanel 
+          isOpen={isContactOpen} 
+          onClose={() => setIsContactOpen(false)} 
+        />
       </main>
     </div>
   );
