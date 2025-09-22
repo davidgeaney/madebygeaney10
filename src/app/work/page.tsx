@@ -1,12 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import dynamic from 'next/dynamic';
 import MobileMenu from '@/components/ui/MobileMenu';
 import WorkHero from "@/components/sections/WorkHero";
 import ContactCTA from "@/components/sections/ContactCTA";
+
+const ContactPanel = dynamic(() => import('@/components/ContactPanel'), { ssr: false });
 
 const navLinks = [
   { name: 'Home, ', href: '/', underlineWidth: '70%' },
@@ -19,6 +22,7 @@ const navLinks = [
 
 export default function WorkPage() {
   const pathname = usePathname();
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   // Navigation bar with logo and CTA
   const renderNavigation = () => (
@@ -73,7 +77,7 @@ export default function WorkPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Mobile Menu */}
-      <MobileMenu />
+      <MobileMenu onContactClick={() => setIsContactOpen(true)} />
       
       {/* Desktop Navigation */}
       {renderNavigation()}
@@ -81,6 +85,10 @@ export default function WorkPage() {
       <main className="m-0 p-0">
         <WorkHero />
         <ContactCTA />
+        <ContactPanel 
+          isOpen={isContactOpen} 
+          onClose={() => setIsContactOpen(false)} 
+        />
       </main>
     </div>
   );
