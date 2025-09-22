@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { usePathname } from 'next/navigation';
 import MobileMenu from '@/components/ui/MobileMenu';
 import ContactCTA from './ContactCTA';
@@ -191,10 +192,25 @@ const ServicesHero: React.FC = () => {
 
   // Mobile View
   if (typeof window !== 'undefined' && window.innerWidth < 768) {
+    const [isContactOpen, setIsContactOpen] = useState(false);
+    
     return (
       <div className="min-h-screen bg-background">
         {/* Mobile Menu */}
-        <MobileMenu />
+        <MobileMenu onContactClick={() => setIsContactOpen(true)} />
+        
+        {/* Contact Panel */}
+        {typeof window !== 'undefined' && (
+          <>
+            {React.createElement(
+              dynamic(() => import('@/components/ContactPanel'), { ssr: false }),
+              {
+                isOpen: isContactOpen,
+                onClose: () => setIsContactOpen(false)
+              }
+            )}
+          </>
+        )}
         
         {/* Desktop Navigation */}
         <div className="container mx-auto px-4 md:px-6 lg:px-8 py-6">
@@ -212,7 +228,7 @@ const ServicesHero: React.FC = () => {
             
             {/* CTA Button for mobile */}
             <div className="md:hidden">
-              <MobileMenu />
+              <MobileMenu onContactClick={() => setIsContactOpen(true)} />
             </div>
           </div>
           
